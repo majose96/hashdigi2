@@ -1,0 +1,99 @@
+
+#include <stdio.h>
+#include <math.h>
+
+int main ( int argc, char **argv )
+{
+// defino variables
+    int b = 1600;
+    int w = b/25;
+    int *s;
+    int ***A;
+   // int l = log10(w)/log10(2);
+    s= malloc(1600 * sizeof(int));
+//...........................................
+    int i,j;
+    A = (int ***) malloc (5*sizeof(int ***));
+
+        for (i = 0; i< 5; i++)
+        {
+                 A[i] = (int**) malloc(5*sizeof(int *));
+                 for (j = 0; j < 5; j++)
+                 {
+                         A[i][j] = (int*)malloc(w*sizeof(int));
+                 }
+        }
+
+
+    return 0;
+}
+
+ //Funcion XOR
+    int XOR(int x,int y){
+        if (x!=y) {
+            return '1';
+        }
+        else {
+            return '0';
+        }
+
+    }
+    int theta(int ***A,int **C,int ** D){
+        int x,y,z,w;
+
+        for(x = 0; x < 5; x++)
+        {
+                for(z = 0; z < w; z++)
+                {
+                        C[x][z] = XOR(XOR(XOR(XOR(A[x][0][z],A[x][1][z]), A[x][2][z]), A[x][3][z]),A[x][4][z]);
+                        D[x][z] = XOR(C [(x-1)%	5][z], C [(x+1)%	5][(z-1) % w]);
+
+                }
+
+        }
+        for(x = 0; x < 5; x++)
+        {
+            for (z = 0; z < w; z++)
+            {
+                for( y = 0; y < 5; y++)
+                {
+                        A[x][y][z] = XOR(A[x][y][z], D [x][z]);
+                }
+            }
+        }
+
+    }
+
+    //Especificacion de rho
+    int rho(int***A){
+        int x,y,z,w,t;
+            for(z = 0; z < w; z++)
+            {
+                    Ac[0][0][z] = A[0][0][z];
+            }
+            x = 1; y = 0;
+            for (t = 0; t<24; t++)
+            {
+                    for(z = 0; z < w; z++)
+                    {
+                                Ac [x][y][z] = A[x][y][(z-(t+1)*(t+2)/2)%w];
+                    }
+                    x = y; y = (2*x+3*y)%5;
+            }
+
+    }
+
+        //Especificacion de pi
+   int pi (int***A){
+       int x,y,z,w;
+            for(x = 0; x < 5; x++)
+            {
+                    for(y = 0; y < 5; y++)
+                    {
+                            for(z = 0; z < w; z++)
+                            {
+                                    Ac [x][y][z] = A[(x+3*y)%5][x][z];
+                            }
+                    }
+            }
+    }
